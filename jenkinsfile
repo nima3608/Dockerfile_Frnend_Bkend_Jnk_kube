@@ -1,0 +1,24 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Build Backend') {
+            steps {
+                script {
+                    docker.image('node:14-alpine').inside {
+                        sh 'cd backend && npm install'
+                    }
+                }
+            }
+        }
+        stage('Build Frontend') {
+            steps {
+                script {
+                    docker.image('node:14-alpine').inside {
+                        sh 'cd frontend && npm install && npm run build'
+                    }
+                }
+            }
+        }
+    }
+}
